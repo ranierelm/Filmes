@@ -6,8 +6,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.ranierelimadev.filmescoroutines.R
+import kotlinx.android.synthetic.main.main_fragment.*
 
 class MainFragment : Fragment() {
 
@@ -31,6 +33,11 @@ class MainFragment : Fragment() {
             MainViewModel.MainViewModelFactory(MainRepository())
         ).get(MainViewModel::class.java)
 
+        viewModel.filmesLiveData.observe(viewLifecycleOwner, Observer { filmes ->
+            textViewFilmes.text = filmes[0].titulo
+        })
+
+        viewModel.getFilmesCoroutines()
     }
 
 }
